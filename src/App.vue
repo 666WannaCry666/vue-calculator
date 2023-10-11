@@ -1,13 +1,13 @@
 <template>
   <div class="App">
-
+    
   </div>
 </template>
 
 <script>
-  export default {
-    
-  }
+export default {
+  
+};
 </script>
 
 <style lang="scss" scoped>
@@ -16,5 +16,4 @@
   padding: 0;
   box-sizing: border-box;
 }
-
 </style>
