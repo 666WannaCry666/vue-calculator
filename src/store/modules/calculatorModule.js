@@ -1,4 +1,4 @@
-const defaultCalculatorModule = {
+const calculatorModule = {
     state() {
         return {
 
@@ -16,4 +16,4 @@ const defaultCalculatorModule = {
     namespaced: true
 }
 
-export default defaultCalculatorModule;
+export default calculatorModule;

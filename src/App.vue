@@ -1,14 +1,16 @@
 <template>
-  <div class="App">
+  <div class="App w-screen h-screen">
     <Header />
+    <RouterView></RouterView>
   </div>
 </template>
 
 <script>
 import Header from '@/components/Header/Header.vue';
+import { RouterView } from 'vue-router';
 
 export default {
-  components: { Header }
+  components: { Header, RouterView }
 };
 </script>
 

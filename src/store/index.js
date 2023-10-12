@@ -1,8 +1,8 @@
 import { createStore } from 'vuex';
-import defaultCalculatorModule from '@/store/modules/defaultCalculatorModule';
+import calculatorModule from '@/store/modules/calculatorModule';
 
 export default createStore({
     modules: {
-        calc: defaultCalculatorModule
+        calc: calculatorModule
     }
 })
