@@ -1,7 +1,7 @@
 const calculatorModule = {
     state() {
         return {
-
+            
         }
     },
     getters: {
