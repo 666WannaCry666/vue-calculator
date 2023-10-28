@@ -2,7 +2,8 @@ const calculatorModule = {
     state() {
         return {
             currentOperation: '0',
-            operands: []
+            operands: [],
+            acceptedKeys: ['+', '-', '*', '-', '=']
         }
     },
     getters: {
@@ -10,10 +11,21 @@ const calculatorModule = {
     },
     mutations: {
         setCurrentOperation(state, currentOperation) {
-            state.currentOperation = currentOperation;
+            if (state.currentOperation === '0') {
+                state.currentOperation = currentOperation;
+            } else {
+                state.currentOperation = [...state.currentOperation, currentOperation].join('');
+            }
+        },
+        deleteLastSymbolCurrentOperation(state) {
+            if (state.currentOperation.length <= 1) {
+                state.currentOperation = '0';
+            } else {
+                state.currentOperation = state.currentOperation.slice(-state.currentOperation.length, -1);
+            }
         },
         setOperands(state, operand) {
-            state.operand = [...state.operand, operand]
+            state.operand = [...state.operand, operand];
         }
     },
     actions: {

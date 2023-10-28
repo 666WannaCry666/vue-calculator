@@ -1,35 +1,46 @@
 <template>
   <input
-    v-focus
     type="text"
     :class="['calculator-view__input', inputClass]"
-    @input="updateInput"
-    @blur="checkValue"
-    :value="modelValue"
+    :value="currentOperation"
+    disabled
   />
 </template>
 
 <script>
+import { mapState, mapMutations } from "vuex";
+
 export default {
-    name: 'CalculatorInput',
-    props: {
-        inputClass: {
-            type: String,
-            required: false
-        },
-        modelValue: {
-            type: String,
-            required: false
-        }
+  name: "CalculatorInput",
+  props: {
+    inputClass: {
+      type: String,
+      required: false,
     },
-    methods: {
-        updateInput(event) {
-            this.$emit('update:modelValue', event.target.value)
-        },
-        checkValue() {
-            this.$emit('update:modelValue', '0')
-        }
-    },
+  },
+  methods: {
+    ...mapMutations({
+      setCurrentOperation: "calc/setCurrentOperation",
+      deleteLastSymbolCurrentOperation: "calc/deleteLastSymbolCurrentOperation"
+    }),
+  },
+  computed: {
+    ...mapState({
+      acceptedKeys: (state) => state.calc.acceptedKeys,
+      currentOperation: (state) => state.calc.currentOperation,
+    }),
+  },
+  mounted() {
+    document.addEventListener("keydown", (event) => {
+      if (event.code.startsWith("Digit")) {
+        this.setCurrentOperation(event.code.replace('Digit', ''));
+      } else if (this.acceptedKeys.includes(event.key)) {
+        this.setCurrentOperation(event.key);
+      } else if (event.code === "Backspace") {
+        this.deleteLastSymbolCurrentOperation()
+      }
+    });
+  },
 };
 </script>
 

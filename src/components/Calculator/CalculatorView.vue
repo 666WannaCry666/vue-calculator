@@ -6,35 +6,15 @@
       155 + 900 + 892
     </p>
     <CalculatorInput
-      @update:modelValue="nullCheck"
-      :modelValue="currentOperation"
       :inputClass="'h-2/4 w-full text-right text-6xl px-4'"
     />
   </div>
 </template>
 
 <script>
-import { mapState, mapMutations } from "vuex";
-
 export default {
-  methods: {
-    ...mapMutations({
-      setCurrentOperation: "calc/setCurrentOperation",
-    }),
-    nullCheck(operation) {
-      if (this.currentOperation.length <= 1) {
-        this.setCurrentOperation('0')
-      } else {
-        this.setCurrentOperation(operation)
-      }
-    }
-  },
-  computed: {
-    ...mapState({
-      currentOperation: (state) => state.calc.currentOperation,
-    }),
-  },
+  
 };
 </script>
 
-<style lang="scss" scoped></style>
+<style scoped></style>
