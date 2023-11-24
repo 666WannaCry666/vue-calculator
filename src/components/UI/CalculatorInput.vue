@@ -18,26 +18,34 @@ export default {
       required: false,
     },
   },
+  data() {
+    return {
+
+    }
+  },
   methods: {
     ...mapMutations({
       setCurrentOperation: "calc/setCurrentOperation",
-      deleteLastSymbolCurrentOperation: "calc/deleteLastSymbolCurrentOperation"
+      deleteLastSymbolCurrentOperation: "calc/deleteLastSymbolCurrentOperation",
+      equalHandler: "calc/equalHandler",
     }),
   },
   computed: {
     ...mapState({
-      acceptedKeys: (state) => state.calc.acceptedKeys,
+      operators: state => state.calc.operators,
       currentOperation: (state) => state.calc.currentOperation,
     }),
   },
   mounted() {
     document.addEventListener("keydown", (event) => {
-      if (event.code.startsWith("Digit")) {
-        this.setCurrentOperation(event.code.replace('Digit', ''));
-      } else if (this.acceptedKeys.includes(event.key)) {
+      if ([...Array(10).keys()].includes(+event.key)) {
+        this.setCurrentOperation(event.key);
+      } else if (Object.values(this.operators).includes(event.key)) {
         this.setCurrentOperation(event.key);
       } else if (event.code === "Backspace") {
         this.deleteLastSymbolCurrentOperation()
+      } else if (event.code === 'Equal') {
+        this.equalHandler();
       }
     });
   },

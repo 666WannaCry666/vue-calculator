@@ -1,37 +1,59 @@
 const calculatorModule = {
-    state() {
-        return {
-            currentOperation: '0',
-            operands: [],
-            acceptedKeys: ['+', '-', '*', '-', '=']
-        }
+  state() {
+    return {
+      currentOperation: "0",
+      operators: {
+        plus: "+",
+        minus: "-",
+        multiply: "*",
+        divide: "/",
+      },
+      expression: [],
+    };
+  },
+  getters: {},
+  mutations: {
+    setCurrentOperation(state, currentOperation) {
+      if (state.currentOperation === "0") {
+        state.currentOperation = Object.values(state.operators).includes(
+          currentOperation,
+        )
+          ? [...state.currentOperation, currentOperation].join("")
+          : currentOperation;
+      } else {
+        state.currentOperation = [
+          ...state.currentOperation,
+          currentOperation,
+        ].join("");
+      }
     },
-    getters: {
-
+    deleteLastSymbolCurrentOperation(state) {
+      if (state.currentOperation.length <= 1) {
+        state.currentOperation = "0";
+      } else {
+        state.currentOperation = state.currentOperation.slice(
+          -state.currentOperation.length,
+          -1,
+        );
+      }
     },
-    mutations: {
-        setCurrentOperation(state, currentOperation) {
-            if (state.currentOperation === '0') {
-                state.currentOperation = currentOperation;
-            } else {
-                state.currentOperation = [...state.currentOperation, currentOperation].join('');
-            }
-        },
-        deleteLastSymbolCurrentOperation(state) {
-            if (state.currentOperation.length <= 1) {
-                state.currentOperation = '0';
-            } else {
-                state.currentOperation = state.currentOperation.slice(-state.currentOperation.length, -1);
-            }
-        },
-        setOperands(state, operand) {
-            state.operand = [...state.operand, operand];
-        }
+    clearCurrentOperation(state) {
+      state.currentOperation = "0";
     },
-    actions: {
-
+    equalHandler(state) {
+      if (String(eval(state.currentOperation)) === "Infinity") {
+        alert("The operation is not allowed!!!");
+        state.currentOperation = "0";
+      } else {
+        state.currentOperation = String(eval(state.currentOperation));
+      }
     },
-    namespaced: true
-}
+    setOperands(state, operand) {
+      state.operand = [...state.operand, operand];
+    },
+  },
+  actions: {},
+  namespaced: true,
+};
 
 export default calculatorModule;

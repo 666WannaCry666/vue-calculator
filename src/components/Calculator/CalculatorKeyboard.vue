@@ -19,7 +19,8 @@
         <font-awesome-icon :icon="['fas', 'percent']" />
       </CalculatorKeyboardButton>
       <CalculatorKeyboardButton
-        @click="addDivideOperation"
+        value="/"
+        @click="setCurrentOperationFromKeyboard"
         :btnClass="'text-teal-600 hover:bg-slate-300 duration-150 hover:text-teal-100'"
       >
         <font-awesome-icon :icon="['fas', 'divide']" />
@@ -48,6 +49,8 @@
         9
       </CalculatorKeyboardButton>
       <CalculatorKeyboardButton
+        value="*"
+        @click="setCurrentOperationFromKeyboard"
         :btnClass="'text-teal-600 hover:bg-slate-300 duration-150 hover:text-teal-100'"
       >
         <font-awesome-icon :icon="['fas', 'xmark']" />
@@ -76,6 +79,8 @@
         6
       </CalculatorKeyboardButton>
       <CalculatorKeyboardButton
+        value="-"
+        @click="setCurrentOperationFromKeyboard"
         :btnClass="'text-teal-600 hover:bg-slate-300 duration-150 hover:text-teal-100'"
       >
         <font-awesome-icon :icon="['fas', 'minus']" />
@@ -104,6 +109,8 @@
         3
       </CalculatorKeyboardButton>
       <CalculatorKeyboardButton
+        value="+"
+        @click="setCurrentOperationFromKeyboard"
         :btnClass="'text-teal-600 hover:bg-slate-300 duration-150 hover:text-teal-100'"
       >
         <font-awesome-icon :icon="['fas', 'plus']" />
@@ -130,6 +137,7 @@
         .
       </CalculatorKeyboardButton>
       <CalculatorKeyboardButton
+        @click="equal"
         :btnClass="'text-teal-600 hover:bg-slate-300 duration-150 hover:text-teal-100'"
       >
         <font-awesome-icon :icon="['fas', 'equals']" />
@@ -148,27 +156,21 @@ export default {
   methods: {
     ...mapMutations({
       setCurrentOperation: "calc/setCurrentOperation",
-      setOperands: "calc/setOperands",
+      equalHandler: "calc/equalHandler",
+      deleteLastSymbolCurrentOperation: "calc/deleteLastSymbolCurrentOperation",
+      clearCurrentOperation: "calc/clearCurrentOperation",
     }),
     setCurrentOperationFromKeyboard(event) {
-      if (this.currentOperation === '0') {
-        this.setCurrentOperation(event.target.value);
-        return;
-      }
-      this.setCurrentOperation(this.currentOperation + event.target.value);
+      this.setCurrentOperation(event.target.value)
     },
     allClear() {
-      this.setCurrentOperation('0');
+      this.clearCurrentOperation()
     },
     deleteLastSymbol() {
-      if (this.currentOperation.length <= 1) {
-        this.setCurrentOperation('0');
-        return;
-      }
-      this.setCurrentOperation(this.currentOperation.slice(-this.currentOperation.length, -1));
+      this.deleteLastSymbolCurrentOperation()
     },
-    addDivideOperation() {
-
+    equal() {
+      this.equalHandler()
     }
   },
   computed: {
